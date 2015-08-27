@@ -10,7 +10,7 @@ module InstructureRegistrar
     def register
       client.set(
         InstructureRegistrar.config.service_name,
-        "#{InstructureRegistrar.service_host}:#{InstructureRegistrar.config.service_port}"
+        "#{InstructureRegistrar.config.service_host}:#{InstructureRegistrar.config.service_port}"
       )
     end
 
