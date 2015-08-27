@@ -27,7 +27,7 @@ information for your local etcd instance:
 
 In your service's project folder, create a configuration file with the following contents:
 
-    #/config/instructure_registrar.rb
+    #/config/initializers/instructure_registrar.rb
     require 'dotenv'
     Dotenv.load
     require 'instructure_registrar'
@@ -48,7 +48,7 @@ In your service's project folder, create a configuration file with the following
 Note that your client application will need a config file similar to that in the section above, but
 unless you plan on registering your app as a service your config file will be simpler:
 
-    #/config/instructure_registrar.rb
+    #/config/initializers/instructure_registrar.rb
     require 'dotenv'
     Dotenv.load
     require 'instructure_registrar'

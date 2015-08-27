@@ -1,6 +1,8 @@
 module InstructureRegistrar
   class Client
 
+    require 'etcd'
+
     def lookup(service_name)
       client.get(service_name).value || "unknown"
     end
