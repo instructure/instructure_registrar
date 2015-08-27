@@ -1,8 +1,7 @@
 # InstructureRegistrar
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/instructure_service_registry_client`. To experiment with that code, run `bin/console` for an interactive prompt.
-
-TODO: Delete this and the text above, and describe your gem
+InstructureRegistrar is a Ruby library for registering and retrieving service
+information from a central etcd service registry.
 
 ## Installation
 
@@ -16,32 +15,29 @@ And then execute:
 
     $ bundle
 
-Or install it yourself as:
-
-    $ gem install instructure_registrar
-
 ## Usage
 
 Make sure that the following environment variables are set with the appropriate
 information for your local etcd instance:
 
-    export REGISTRY_HOST=
-    export REGISTRY_PORT=
+    REGISTRY_HOST
+    REGISTRY_PORT
 
 ### Integrating with a service
 
-Create a /config/instructure_registrar.rb file with the following contents:
+In your service's project folder, create a configuration file with the following contents:
 
+    #/config/instructure_registrar.rb
     require 'dotenv'
     Dotenv.load
-    require 'concierge_service'
+    require 'instructure_registrar'
 
     InstructureRegistrar.configure do |config|
       config.registry_host = ENV.fetch('REGISTRY_HOST') || "http://instructure-etcd.docker"
       config.registry_port = ENV.fetch("REGISTRY_PORT") || 12379
       config.service_name  = "my.service.name"
-      config.service_host  = "localhost"
-      config.service_port  = "3000"
+      config.service_host  = ENV.fetch("SERVICE_HOST") || "http://localhost/"
+      config.service_port  = ENV.fetch("SERVICE_PORT") || 3000
     end
 
     InstructureRegistrar.register
@@ -49,19 +45,21 @@ Create a /config/instructure_registrar.rb file with the following contents:
 
 ### Looking up a service
 
+Note that your client application will need a config file similar to that in the section above, but
+unless you plan on registering your app as a service your config file will be simpler:
+
+    #/config/instructure_registrar.rb
+    require 'dotenv'
+    Dotenv.load
     require 'instructure_registrar'
-    @my_service_url = InstructureRegistrar.get_service('my_service_name')
 
-## Development
+    InstructureRegistrar.configure do |config|
+      config.registry_host = ENV.fetch('REGISTRY_HOST') || "http://instructure-etcd.docker"
+      config.registry_port = ENV.fetch("REGISTRY_PORT") || 12379
+    end
 
-After checking out the repo, run `bin/setup` to install dependencies. Then, run `bin/console` for an interactive prompt that will allow you to experiment.
+Then, to fetch connection information for a given service:
 
-To install this gem onto your local machine, run `bundle exec rake install`. To release a new version, update the version number in `version.rb`, and then run `bundle exec rake release` to create a git tag for the version, push git commits and tags, and push the `.gem` file to [rubygems.org](https://rubygems.org).
+    require 'instructure_registrar'
+    @some_service_url = InstructureRegistrar.get_service('some_service_name')
 
-## Contributing
-
-1. Fork it ( https://github.com/[my-github-username]/instructure_registrar/fork )
-2. Create your feature branch (`git checkout -b my-new-feature`)
-3. Commit your changes (`git commit -am 'Add some feature'`)
-4. Push to the branch (`git push origin my-new-feature`)
-5. Create a new Pull Request
