@@ -1,6 +1,10 @@
 module InstructureRegistrar
   class Client
 
+    def lookup(service_name)
+      client.get(service_name).value || "unknown"
+    end
+
     def register
       client.set(
         InstructureRegistrar.config.service_name,

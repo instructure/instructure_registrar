@@ -1,11 +1,11 @@
 # coding: utf-8
 lib = File.expand_path('../lib', __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
-require 'instructure_service_registry_client/version'
+require 'instructure_registrar/version'
 
 Gem::Specification.new do |spec|
   spec.name          = "instructure_registrar"
-  spec.version       = InstructureServiceRegistryClient::VERSION
+  spec.version       = InstructureRegistrar::VERSION
   spec.authors       = ["CoralineAda"]
   spec.email         = ["coraline@idolhands.com"]
 
@@ -18,6 +18,7 @@ Gem::Specification.new do |spec|
   spec.executables   = spec.files.grep(%r{^exe/}) { |f| File.basename(f) }
   spec.require_paths = ["lib"]
 
+  spec.add_dependency "dotenv"
   spec.add_dependency "etcd", "~> 0.3"
   spec.add_dependency "require_all"
 

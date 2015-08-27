@@ -3,6 +3,10 @@ require_rel 'instructure_registrar'
 
 module InstructureRegistrar
 
+  def self.get_service(service_name)
+    InstructureRegistrar::Client.new.lookup(service_name)
+  end
+
   def self.register
     InstructureRegistrar::Client.new.register
   end
