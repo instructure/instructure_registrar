@@ -6,8 +6,8 @@ require 'instructure_registrar/version'
 Gem::Specification.new do |spec|
   spec.name          = "instructure_registrar"
   spec.version       = InstructureRegistrar::VERSION
-  spec.authors       = ["CoralineAda"]
-  spec.email         = ["coraline@idolhands.com"]
+  spec.authors       = ["CoralineAda", "Instructure"]
+  spec.email         = ["coraline@idolhands.com", "eng@instructure.com"]
 
   spec.summary       = %q{Client for registering an Instructure service via etcd.}
   spec.description   = %q{Client for registering an Instructure service via etcd.}
