@@ -4,7 +4,11 @@ module InstructureRegistrar
     require 'etcd'
 
     def lookup(service_name)
-      client.get("/#{service_name}").value || "unknown"
+      begin
+        client.get("/#{service_name}").value
+      rescue Etcd::KeyNotFound
+        "unknown"
+      end
     end
 
     def register
