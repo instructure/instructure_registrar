@@ -3,6 +3,20 @@ module InstructureRegistrar
 
     require 'etcd'
 
+    attr_reader :server_available
+
+    def initialize
+      @server_available = healthcheck
+    end
+
+    def healthcheck
+      begin
+        client.version
+      rescue
+        false
+      end
+    end
+
     def lookup(service_name)
       begin
         client.get("/#{service_name}").value
@@ -12,6 +26,7 @@ module InstructureRegistrar
     end
 
     def register
+      return unless server_available
       client.set(
         "/#{InstructureRegistrar.config.service_name}",
         value: "#{InstructureRegistrar.config.service_host}:#{InstructureRegistrar.config.service_port}"
@@ -19,7 +34,12 @@ module InstructureRegistrar
     end
 
     def unregister
-      client.delete("/#{InstructureRegistrar.config.service_name}")
+      return unless server_available
+      begin
+        client.delete("/#{InstructureRegistrar.config.service_name}")
+      rescue Etcd::KeyNotFound
+        false
+      end
     end
 
     private
