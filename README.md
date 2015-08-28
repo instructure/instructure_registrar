@@ -28,20 +28,22 @@ information for your local etcd instance:
 In your service's project folder, create a configuration file with the following contents:
 
     #/config/initializers/instructure_registrar.rb
+    require 'instructure_registrar'
     require 'dotenv'
     Dotenv.load
-    require 'instructure_registrar'
 
     InstructureRegistrar.configure do |config|
-      config.registry_host = ENV.fetch('REGISTRY_HOST') || "http://instructure-etcd.docker"
-      config.registry_port = ENV.fetch("REGISTRY_PORT") || 12379
-      config.service_name  = "my.service.name"
-      config.service_host  = ENV.fetch("SERVICE_HOST") || "http://localhost/"
-      config.service_port  = ENV.fetch("SERVICE_PORT") || 3000
+      config.registry_host = ENV['REGISTRY_HOST']# || "http://instructure-etcd.docker"
+      config.registry_port = ENV['REGISTRY_PORT']# || 12379
+      config.service_name  = "sample_service_3"
+      config.service_host  = ENV['SERVICE_HOST'] || "http://localhost"
+      config.service_port  = ENV['SERVICE_PORT'] || 3000
     end
 
-    InstructureRegistrar.register
-    at_exit { InstructureRegistrar.unregister }
+    if ENV['RAILS_ENV'] == "development"
+      InstructureRegistrar.register
+      at_exit { InstructureRegistrar.unregister }
+    end
 
 ### Looking up a service
 

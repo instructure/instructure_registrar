@@ -4,18 +4,18 @@ module InstructureRegistrar
     require 'etcd'
 
     def lookup(service_name)
-      client.get(service_name).value || "unknown"
+      client.get("/#{service_name}").value || "unknown"
     end
 
     def register
       client.set(
-        InstructureRegistrar.config.service_name,
+        "/#{InstructureRegistrar.config.service_name}",
         value: "#{InstructureRegistrar.config.service_host}:#{InstructureRegistrar.config.service_port}"
       )
     end
 
     def unregister
-      client.delete(InstructureRegistrar.config.service_name)
+      client.delete("/#{InstructureRegistrar.config.service_name}")
     end
 
     private
