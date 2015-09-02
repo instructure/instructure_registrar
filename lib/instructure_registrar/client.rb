@@ -10,12 +10,10 @@ module InstructureRegistrar
     end
 
     def healthcheck
-#      begin
-        client.version
-#      rescue
-      #   p "WARNING: etcd server unavailable"
-      #   false
-      # end
+      client.version
+    rescue
+      p "WARNING: etcd server unavailable at #{InstructureRegistrar.config.registry_host}:#{InstructureRegistrar.config.registry_port}"
+      false
     end
 
     def lookup(service_name)
