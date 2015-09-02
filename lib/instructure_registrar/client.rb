@@ -10,12 +10,12 @@ module InstructureRegistrar
     end
 
     def healthcheck
-      begin
+#      begin
         client.version
-      rescue
-        p "WARNING: etcd server unavailable"
-        false
-      end
+#      rescue
+      #   p "WARNING: etcd server unavailable"
+      #   false
+      # end
     end
 
     def lookup(service_name)
