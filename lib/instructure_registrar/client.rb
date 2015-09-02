@@ -27,16 +27,23 @@ module InstructureRegistrar
 
     def register
       return unless server_available
-      client.set(
-        "/#{InstructureRegistrar.config.service_name}",
-        value: "#{InstructureRegistrar.config.service_host}:#{InstructureRegistrar.config.service_port}"
-      )
+      InstructureRegistrar.config.service_config.keys.each do |key|
+        client.set(
+          "/#{InstructureRegistrar.config.service_name}/#{key}",
+          value: InstructureRegistrar.config.service_config[key]
+        )
+      end
     end
 
     def unregister
       return unless server_available
       begin
-        client.delete("/#{InstructureRegistrar.config.service_name}")
+        InstructureRegistrar.config.service_config.keys.each do |key|
+          client.delete(
+            "/#{InstructureRegistrar.config.service_name}/#{key}",
+            value: InstructureRegistrar.config.service_config[key]
+          )
+        end
       rescue Etcd::KeyNotFound
         false
       end

@@ -30,7 +30,7 @@ module InstructureRegistrar
 
   class Configuration
     attr_accessor :registry_host, :registry_port
-    attr_accessor :service_name, :service_host, :service_port
+    attr_accessor :service_name, :service_config
   end
 
 end
