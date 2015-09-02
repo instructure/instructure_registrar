@@ -13,6 +13,7 @@ module InstructureRegistrar
       begin
         client.version
       rescue
+        p "WARNING: etcd server unavailable"
         false
       end
     end
