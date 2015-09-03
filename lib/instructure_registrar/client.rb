@@ -36,17 +36,17 @@ module InstructureRegistrar
     end
 
     def unregister
-      return unless server_available
-      begin
-        InstructureRegistrar.config.service_config.keys.each do |key|
-          client.delete(
-            "/#{InstructureRegistrar.config.service_name}/#{key}",
-            value: InstructureRegistrar.config.service_config[key]
-          )
-        end
-      rescue Etcd::KeyNotFound
-        false
-      end
+      # return unless server_available
+      # begin
+      #   InstructureRegistrar.config.service_config.keys.each do |key|
+      #     client.delete(
+      #       "/#{InstructureRegistrar.config.service_name}/#{key}",
+      #       value: InstructureRegistrar.config.service_config[key]
+      #     )
+      #   end
+      # rescue Etcd::KeyNotFound
+      #   false
+      # end
     end
 
     private
