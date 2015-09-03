@@ -27,8 +27,7 @@ module InstructureRegistrar
     def register
       return unless server_available
       InstructureRegistrar.config.service_config.keys.each do |key|
-        p "InstructureRegistrar setting #{InstructureRegistrar.config.service_name}/#{key}"
-        p client.set(
+        client.set(
           "/#{InstructureRegistrar.config.service_name}/#{key}",
           value: InstructureRegistrar.config.service_config[key]
         )
