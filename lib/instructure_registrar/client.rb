@@ -20,7 +20,7 @@ module InstructureRegistrar
       begin
         client.get("/#{service_name}").value
       rescue Etcd::KeyNotFound
-        "unknown"
+        {status: "unknown"}
       end
     end
 
