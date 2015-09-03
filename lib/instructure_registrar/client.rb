@@ -18,7 +18,7 @@ module InstructureRegistrar
 
     def lookup(service_name)
       begin
-        client.get("/#{service_name}").value
+        client.get("/#{service_name}").children.inject({}){|h, child| h["#{child.key}"] = child.value; h}
       rescue Etcd::KeyNotFound
         {status: "unknown"}
       end
