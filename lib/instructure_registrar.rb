@@ -29,8 +29,13 @@ module InstructureRegistrar
   end
 
   class Configuration
-    attr_accessor :registry_host, :registry_port
+    attr_writer :registry_host
+    attr_accessor :registry_port
     attr_accessor :service_name, :service_config
+
+    def registry_host
+      @registry_host.gsub("http[s]?:\/\/", "")
+    end
   end
 
 end
