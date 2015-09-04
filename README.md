@@ -36,9 +36,10 @@ In your service's project folder, create a configuration file with the following
       config.registry_host = ENV['REGISTRY_HOST']# || "http://instructure-etcd.docker"
       config.registry_port = ENV['REGISTRY_PORT']# || 12379
       config.service_name  = "sample_service_3"
-      config.service_host  = ENV['SERVICE_HOST'] || "http://localhost"
-      config.service_port  = ENV['SERVICE_PORT'] || 3000
-      config.service_config = { token: 'foo', option: 'bar'}
+      config.service_config = {
+        host: "http://someservice.docker",
+        token: 'foo',
+        option: 'bar'}
     end
 
     if ENV['RAILS_ENV'] == "development"
@@ -65,4 +66,6 @@ Then, to fetch connection information for a given service:
 
     require 'instructure_registrar'
     @some_service_url = InstructureRegistrar.get_service('some_service_name')
+
+This will return all keys and values associated with the service.
 
